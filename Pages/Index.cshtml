@@ -1,0 +1,90 @@
+﻿@page
+@model IndexModel
+@{
+    string roomName = "Conference room A";
+    string roomType = "training";
+    int capacity = 12;
+    bool hasProjector = true;
+    string date = DateTime.Now.ToString("MMMM dd, yyyy - hh:mm tt");
+    int currentHour = DateTime.Now.Hour;
+    List<string> amenities = new List<string> 
+        {"Whiteboard", "Projector", "Conference Phone", "WiFi"};
+    int startHour = 9;
+    int endHour = 17;
+    int confirmationNumber = 1001;
+    int totalSlots = 8;
+    int count = 0;
+    List<string> equipment = new List<string>()
+    {
+        "Laptop",
+        "HDMI Cables",
+        "Remote Control",
+        "Microphone"
+    };
+}
+<h1>@roomName</h1>
+<p>@date</p>
+<p>Capacity: @capacity</p>
+<p>Has projector: @hasProjector</p>
+
+@if (currentHour >= 9 && currentHour <= 17)
+{
+    <h3>Room is available for booking</h3>
+}
+else if (currentHour >= 18 && currentHour <= 20)
+{
+    <h3>Room available for after-hours booking (additional fees apply)</h3>
+}
+else
+{
+    <h3>Room is closed</h3>
+}
+
+@switch (roomType)
+{
+    case "conference": 
+        <h2> Room type: @roomType </h2> break;
+    case "training":
+        <h2> Room type: @roomType </h2> break;
+    case "executive":
+        <h2> Room type: @roomType </h2> break;
+    default:
+        <h2> Room type: @roomType </h2> break;
+}   
+
+<ul>
+    @foreach(var name in amenities)
+    {
+        <li>@name</li>
+    }
+</ul>
+
+<h4>Available time slots:</h4>
+
+<ul>
+    @for (int hour = startHour; hour <= endHour; hour++)
+    {
+        <li>@hour:00</li>
+    }
+</ul>
+
+<ul>
+    @while (count < totalSlots)
+    {
+        <p>Booking confirmation #@confirmationNumber</p>
+        confirmationNumber++;
+        count++;
+    }
+</ul>
+
+@if (hasProjector is true)
+{
+    foreach (var x in equipment)
+    {
+        <h5>@x</h5>
+    }
+}
+else
+{
+    <h5>Empty!</h5>
+}
